@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
-import { X, Shield, HardDrive, Info, Globe, Lock, Download, Upload, User, Mail, ExternalLink } from 'lucide-react'
+import { useState, useEffect, useMemo } from 'react'
+import { X, Shield, HardDrive, Info, Globe, Lock, Download, Upload, User, Mail, ExternalLink, Eye, FileSpreadsheet } from 'lucide-react'
 import { useTranslation } from '../hooks/useTranslation'
 import { languages } from '../i18n'
-import { encryptBackup, decryptBackup } from '../utils/backup'
+import { encryptBackup, decryptBackup, mergeAccounts } from '../utils/backup'
+import { parseEdgeCsv } from '../utils/csv'
 
 export default function SettingsModal({ open, passwords, onClose, onImport }) {
   const { t, language, setLanguage } = useTranslation()
@@ -11,9 +12,14 @@ export default function SettingsModal({ open, passwords, onClose, onImport }) {
   const [currentAppPassword, setCurrentAppPassword] = useState('')
   const [newAppPassword, setNewAppPassword] = useState('')
   const [passwordMsg, setPasswordMsg] = useState('')
-  const [exportMsg, setExportMsg] = useState('')
-  const [importMsg, setImportMsg] = useState('')
+  const [exportPassword, setExportPassword] = useState('')
+  const [importPassword, setImportPassword] = useState('')
+  const [message, setMessage] = useState('')
+  const [preview, setPreview] = useState(null)
   const [appVersion, setAppVersion] = useState('')
+  const [csvPreview, setCsvPreview] = useState(null)
+  const [csvFile, setCsvFile] = useState(null)
+  const strength = useMemo(() => scorePassword(exportPassword), [exportPassword])
 
   useEffect(() => {
     if (open) {
@@ -21,10 +27,14 @@ export default function SettingsModal({ open, passwords, onClose, onImport }) {
       window.api.isAppPasswordConfigured().then(setIsAppLockConfigured).catch(() => {})
     } else {
       setPasswordMsg('')
-      setExportMsg('')
-      setImportMsg('')
+      setMessage('')
       setCurrentAppPassword('')
       setNewAppPassword('')
+      setExportPassword('')
+      setImportPassword('')
+      setPreview(null)
+      setCsvPreview(null)
+      setCsvFile(null)
     }
   }, [open])
 
@@ -42,43 +52,57 @@ export default function SettingsModal({ open, passwords, onClose, onImport }) {
     setPasswordMsg(newAppPassword ? t('settings.lockEnabled') : t('settings.lockDisabled'))
   }
 
-  async function handleExport() {
-    setExportMsg('')
+  async function exportPasswords() {
+    if (exportPassword.length < 8) return setMessage(t('settings.minChars'))
     try {
-      const path = await window.api.exportFile()
-      if (!path) return
-
-      const password = prompt(t('settings.exportPasswordPrompt'))
-      if (!password) return
-
-      const encrypted = await encryptBackup(passwords, password)
-      await window.api.writeFile(path, encrypted)
-      setExportMsg(t('settings.exportSuccess'))
+      const encrypted = await encryptBackup(passwords, exportPassword)
+      const filePath = await window.api.exportPasswords(encrypted)
+      setMessage(filePath ? t('settings.exported', { count: passwords.length }) : t('settings.exportCancelled'))
     } catch (e) {
-      setExportMsg(t('settings.exportError'))
+      console.error('Export failed:', e)
+      setMessage('Export failed: ' + (e.message || e))
     }
   }
 
-  async function handleImport() {
-    setImportMsg('')
-    try {
-      const content = await window.api.importPasswordsFile()
-      if (!content) return
+  async function loadImportPreview() {
+    if (!importPassword) return setMessage(t('settings.enterPassword'))
+    const content = await window.api.importPasswordsFile()
+    if (!content) return setMessage(t('settings.importCancelled'))
+    const imported = await decryptBackup(content, importPassword)
+    if (!imported) return setMessage(t('settings.wrongPassword'))
+    const result = mergeAccounts(passwords, imported)
+    setPreview(result)
+    setMessage(t('settings.previewSummary', { newCount: result.newAccounts.length, dupCount: result.duplicateCount }))
+  }
 
-      const password = prompt(t('settings.importPasswordPrompt'))
-      if (!password) return
+  async function confirmImport() {
+    if (!preview) return
+    await onImport(preview.newAccounts)
+    setMessage(t('settings.imported', { count: preview.newAccounts.length }))
+    setPreview(null)
+  }
 
-      const decrypted = await decryptBackup(content, password)
-      if (!decrypted) {
-        setImportMsg(t('settings.importDecryptFailed'))
-        return
-      }
-
-      await onImport(decrypted)
-      setImportMsg(t('settings.importSuccess', { count: decrypted.length }))
-    } catch (e) {
-      setImportMsg(t('settings.importError'))
+  function handleCsvFile(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setCsvFile(file)
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      const text = ev.target.result
+      const entries = parseEdgeCsv(text)
+      const result = mergeAccounts(passwords, entries)
+      setCsvPreview(result)
+      setMessage(t('settings.csvPreview', { newCount: result.newAccounts.length, dupCount: result.duplicateCount }))
     }
+    reader.readAsText(file)
+  }
+
+  async function confirmCsvImport() {
+    if (!csvPreview) return
+    await onImport(csvPreview.newAccounts)
+    setMessage(t('settings.csvImported', { count: csvPreview.newAccounts.length }))
+    setCsvPreview(null)
+    setCsvFile(null)
   }
 
   if (!open) return null
@@ -100,19 +124,25 @@ export default function SettingsModal({ open, passwords, onClose, onImport }) {
           <aside className="settings-sidebar">
             <button
               className={`sidebar-tab ${activeTab === 'appLock' ? 'active' : ''}`}
-              onClick={() => { setActiveTab('appLock'); setPasswordMsg(''); setExportMsg(''); setImportMsg('') }}
+              onClick={() => { setActiveTab('appLock'); setPasswordMsg(''); setMessage('') }}
             >
               <Shield size={18} /> {t('settings.appLock')}
             </button>
             <button
               className={`sidebar-tab ${activeTab === 'backupRestore' ? 'active' : ''}`}
-              onClick={() => { setActiveTab('backupRestore'); setPasswordMsg(''); setExportMsg(''); setImportMsg('') }}
+              onClick={() => { setActiveTab('backupRestore'); setPasswordMsg(''); setMessage('') }}
             >
               <HardDrive size={18} /> {t('settings.backupRestore')}
             </button>
             <button
+              className={`sidebar-tab ${activeTab === 'imports' ? 'active' : ''}`}
+              onClick={() => { setActiveTab('imports'); setPasswordMsg(''); setMessage('') }}
+            >
+              <FileSpreadsheet size={18} /> {t('settings.imports')}
+            </button>
+            <button
               className={`sidebar-tab ${activeTab === 'about' ? 'active' : ''}`}
-              onClick={() => { setActiveTab('about'); setPasswordMsg(''); setExportMsg(''); setImportMsg('') }}
+              onClick={() => { setActiveTab('about'); setPasswordMsg(''); setMessage('') }}
             >
               <Info size={18} /> {t('settings.about')}
             </button>
@@ -146,22 +176,58 @@ export default function SettingsModal({ open, passwords, onClose, onImport }) {
               <div className="settings-tab-pane">
                 <section>
                   <h3><Download size={18} />{t('settings.exportAccounts')}</h3>
-                  <p className="settings-desc">{t('settings.exportDesc')}</p>
-                  <button className="primary-button" onClick={handleExport}>
-                    <Download size={16} />
+                  <label>
+                    <span>{t('common.password')}</span>
+                    <input type="password" value={exportPassword} onChange={(e) => setExportPassword(e.target.value)} />
+                  </label>
+                  <div className="strength">
+                    <span style={{ width: `${strength}%` }} />
+                  </div>
+                  <button className="primary-button" onClick={exportPasswords}>
+                    <Lock size={17} />
                     {t('settings.exportButton')}
                   </button>
-                  {exportMsg && <p style={{ color: 'var(--accent)', fontSize: '13px' }}>{exportMsg}</p>}
                 </section>
 
                 <section>
                   <h3><Upload size={18} />{t('settings.importAccounts')}</h3>
-                  <p className="settings-desc">{t('settings.importDesc')}</p>
-                  <button className="secondary-button" onClick={handleImport}>
-                    <Upload size={16} />
-                    {t('settings.importButton')}
+                  <label>
+                    <span>{t('common.password')}</span>
+                    <input type="password" value={importPassword} onChange={(e) => setImportPassword(e.target.value)} />
+                  </label>
+                  <button className="secondary-button" onClick={loadImportPreview}>
+                    <Eye size={17} />
+                    {t('settings.previewImport')}
                   </button>
-                  {importMsg && <p style={{ color: 'var(--accent)', fontSize: '13px' }}>{importMsg}</p>}
+                  {preview && (
+                    <button className="primary-button" onClick={confirmImport}>
+                      {t('settings.importButton', { count: preview.newAccounts.length })}
+                    </button>
+                  )}
+                </section>
+              </div>
+            )}
+
+            {activeTab === 'imports' && (
+              <div className="settings-tab-pane">
+                <section>
+                  <h3><FileSpreadsheet size={18} />{t('settings.edgeImport')}</h3>
+                  <p className="settings-desc">{t('settings.edgeImportDesc')}</p>
+                  <label className="csv-upload">
+                    <input type="file" accept=".csv" onChange={handleCsvFile} style={{ display: 'none' }} />
+                    <Upload size={18} />
+                    {csvFile ? csvFile.name : t('settings.selectCsvFile')}
+                  </label>
+                  {csvPreview && (
+                    <>
+                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                        {t('settings.csvPreview', { newCount: csvPreview.newAccounts.length, dupCount: csvPreview.duplicateCount })}
+                      </p>
+                      <button className="primary-button" onClick={confirmCsvImport}>
+                        {t('settings.importButton', { count: csvPreview.newAccounts.length })}
+                      </button>
+                    </>
+                  )}
                 </section>
               </div>
             )}
@@ -212,9 +278,19 @@ export default function SettingsModal({ open, passwords, onClose, onImport }) {
               ))}
             </select>
           </label>
-          <span>{passwordMsg || exportMsg || importMsg}</span>
+          <span>{passwordMsg || message}</span>
         </footer>
       </div>
     </div>
   )
+}
+
+function scorePassword(password) {
+  let score = 0
+  if (password.length >= 8) score += 35
+  if (password.length >= 14) score += 25
+  if (/[A-Z]/.test(password)) score += 15
+  if (/[0-9]/.test(password)) score += 15
+  if (/[^A-Za-z0-9]/.test(password)) score += 10
+  return Math.min(score, 100)
 }

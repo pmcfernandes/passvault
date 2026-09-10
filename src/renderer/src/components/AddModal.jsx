@@ -1,19 +1,14 @@
-import { useState } from 'react'
-import { X, Wand2 } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { X, Wand2, Eye, EyeOff, Settings } from 'lucide-react'
 import { useTranslation } from '../hooks/useTranslation'
 import { generatePassword } from '../utils/generator'
+import { useCategories } from '../hooks/useCategories'
+import AddCategoryModal from './AddCategoryModal'
 
-const CATEGORIES = [
-  { value: 'work', label: 'Work' },
-  { value: 'finance', label: 'Finance' },
-  { value: 'email', label: 'Email' },
-  { value: 'social', label: 'Social' },
-  { value: 'shopping', label: 'Shopping' },
-  { value: 'other', label: 'Other' }
-]
-
-export default function AddModal({ open, onClose, onAdd }) {
+export default function AddModal({ open, onClose, onAdd, editEntry }) {
   const { t } = useTranslation()
+  const [categoryVersion, setCategoryVersion] = useState(0)
+  const { allCategories, defaultCategories } = useCategories(categoryVersion)
   const [form, setForm] = useState({
     title: '',
     username: '',
@@ -23,10 +18,31 @@ export default function AddModal({ open, onClose, onAdd }) {
     category: 'other'
   })
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showCategoryModal, setShowCategoryModal] = useState(false)
+
+  const isEditing = !!editEntry
+
+  useEffect(() => {
+    if (editEntry) {
+      setForm({
+        title: editEntry.title || '',
+        username: editEntry.username || '',
+        password: editEntry.password || '',
+        url: editEntry.url || '',
+        notes: editEntry.notes || '',
+        category: editEntry.category || 'other'
+      })
+      setShowPassword(false)
+    } else {
+      resetForm()
+    }
+  }, [editEntry, open])
 
   function resetForm() {
     setForm({ title: '', username: '', password: '', url: '', notes: '', category: 'other' })
     setError('')
+    setShowPassword(false)
   }
 
   function updateField(field, value) {
@@ -44,12 +60,20 @@ export default function AddModal({ open, onClose, onAdd }) {
       return
     }
 
-    await onAdd({
-      ...form,
-      id: crypto.randomUUID(),
-      createdAt: Date.now(),
-      favorite: false
-    })
+    if (isEditing) {
+      await onAdd({
+        ...form,
+        id: editEntry.id,
+        createdAt: editEntry.createdAt
+      })
+    } else {
+      await onAdd({
+        ...form,
+        id: crypto.randomUUID(),
+        createdAt: Date.now(),
+        favorite: false
+      })
+    }
 
     resetForm()
   }
@@ -60,7 +84,7 @@ export default function AddModal({ open, onClose, onAdd }) {
     <div className="modal-backdrop" onClick={() => { resetForm(); onClose() }}>
       <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{t('addModal.title')}</h2>
+          <h2>{isEditing ? t('addModal.editTitle') : t('addModal.title')}</h2>
           <button className="icon-button" onClick={onClose}>
             <X size={20} />
           </button>
@@ -80,11 +104,20 @@ export default function AddModal({ open, onClose, onAdd }) {
 
             <label>
               {t('addModal.category')}
-              <select value={form.category} onChange={(e) => updateField('category', e.target.value)}>
-                {CATEGORIES.map((cat) => (
-                  <option key={cat.value} value={cat.value}>{t(`categories.${cat.value}`)}</option>
-                ))}
-              </select>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <select
+                  value={form.category}
+                  onChange={(e) => updateField('category', e.target.value)}
+                  style={{ flex: 1 }}
+                >
+                  {allCategories.map((cat) => (
+                    <option key={cat} value={cat}>{defaultCategories.includes(cat) ? t(`categories.${cat}`) : cat}</option>
+                  ))}
+                </select>
+                <button type="button" className="secondary-button" onClick={() => setShowCategoryModal(true)} style={{ flexShrink: 0 }} title={t('addModal.manageCategories')}>
+                  <Settings size={16} />
+                </button>
+              </div>
             </label>
 
             <label>
@@ -109,11 +142,15 @@ export default function AddModal({ open, onClose, onAdd }) {
               {t('addModal.passwordLabel')}
               <div style={{ display: 'flex', gap: '8px' }}>
                 <input
+                  type={showPassword ? 'text' : 'password'}
                   value={form.password}
                   onChange={(e) => updateField('password', e.target.value)}
                   placeholder={t('addModal.passwordPlaceholder')}
                   style={{ flex: 1 }}
                 />
+                <button type="button" className="secondary-button" onClick={() => setShowPassword(!showPassword)} style={{ flexShrink: 0 }}>
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
                 <button type="button" className="secondary-button" onClick={handleGenerate} style={{ flexShrink: 0 }}>
                   <Wand2 size={16} />
                 </button>
@@ -140,6 +177,8 @@ export default function AddModal({ open, onClose, onAdd }) {
           </div>
         </form>
       </div>
+
+      <AddCategoryModal open={showCategoryModal} onClose={() => setShowCategoryModal(false)} onCategoriesChange={() => setCategoryVersion((v) => v + 1)} />
     </div>
   )
 }

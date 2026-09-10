@@ -236,24 +236,29 @@ fn reorder_passwords(app: AppHandle, ids: Vec<String>) -> Result<Vec<Value>, Str
 
 #[tauri::command]
 fn export_file() -> Option<String> {
-  rfd::FileDialog::new()
+  let Some(path) = rfd::FileDialog::new()
     .set_title("Export encrypted backup")
     .set_file_name("passwords.pvault")
     .add_filter("PassVault Backup", &["pvault"])
     .save_file()
-    .map(|path| path.to_string_lossy().into_owned())
+  else {
+    return None;
+  };
+
+  Some(path.to_string_lossy().into_owned())
 }
 
 #[tauri::command]
-fn import_file() -> Result<Option<String>, String> {
-  let Some(path) = rfd::FileDialog::new()
+async fn import_file() -> Result<Option<String>, String> {
+  let dialog = rfd::AsyncFileDialog::new()
     .set_title("Import encrypted backup")
-    .add_filter("PassVault Backup", &["pvault", "json"])
-    .pick_file()
-  else {
+    .add_filter("PassVault Backup", &["pvault", "json"]);
+
+  let Some(handle) = dialog.pick_file().await else {
     return Ok(None);
   };
 
+  let path = handle.path().to_path_buf();
   fs::read_to_string(path).map(Some).map_err(|error| error.to_string())
 }
 
@@ -264,23 +269,24 @@ fn write_file(file_path: String, content: String) -> Result<bool, String> {
 }
 
 #[tauri::command]
-fn export_passwords(content: String) -> Result<Option<String>, String> {
-  let Some(path) = rfd::FileDialog::new()
+async fn export_passwords(content: String) -> Result<Option<String>, String> {
+  let dialog = rfd::AsyncFileDialog::new()
     .set_title("Export encrypted backup")
     .set_file_name("passwords.pvault")
-    .add_filter("PassVault Backup", &["pvault"])
-    .save_file()
-  else {
+    .add_filter("PassVault Backup", &["pvault"]);
+
+  let Some(handle) = dialog.save_file().await else {
     return Ok(None);
   };
 
+  let path = handle.path().to_path_buf();
   fs::write(&path, content).map_err(|error| error.to_string())?;
   Ok(Some(path.to_string_lossy().into_owned()))
 }
 
 #[tauri::command]
-fn import_passwords_file() -> Result<Option<String>, String> {
-  import_file()
+async fn import_passwords_file() -> Result<Option<String>, String> {
+  import_file().await
 }
 
 #[tauri::command]

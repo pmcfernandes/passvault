@@ -22,6 +22,7 @@ function AppInner() {
   const passwords = usePasswords()
   const { t } = useTranslation()
   const [addOpen, setAddOpen] = useState(false)
+  const [editingEntry, setEditingEntry] = useState(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [generatorOpen, setGeneratorOpen] = useState(false)
   const [checkingLock, setCheckingLock] = useState(true)
@@ -77,17 +78,23 @@ function AppInner() {
         ) : passwords.passwords.length === 0 ? (
           <EmptyState onAdd={() => setAddOpen(true)} onImport={() => setSettingsOpen(true)} />
         ) : (
-          <PasswordList entries={passwords.filteredPasswords} onDelete={passwords.deletePassword} />
+          <PasswordList entries={passwords.filteredPasswords} onDelete={passwords.deletePassword} onDeleteBulk={passwords.deletePasswords} onEdit={(entry) => { setEditingEntry(entry); setAddOpen(true) }} />
         )}
       </section>
 
       <AddModal
         open={addOpen}
-        onClose={() => setAddOpen(false)}
+        onClose={() => { setAddOpen(false); setEditingEntry(null) }}
         onAdd={async (entry) => {
-          await passwords.addPassword(entry)
+          if (editingEntry) {
+            await passwords.updatePassword(entry.id, entry)
+          } else {
+            await passwords.addPassword(entry)
+          }
           setAddOpen(false)
+          setEditingEntry(null)
         }}
+        editEntry={editingEntry}
       />
 
       <SettingsModal

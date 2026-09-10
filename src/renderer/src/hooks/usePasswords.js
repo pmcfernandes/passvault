@@ -40,6 +40,11 @@ export function usePasswords() {
     setPasswords(next)
   }, [])
 
+  const deletePasswords = useCallback(async (ids) => {
+    const remaining = passwords.filter((p) => !ids.includes(p.id))
+    await savePasswords(remaining)
+  }, [passwords, savePasswords])
+
   const updatePassword = useCallback(async (id, data) => {
     const next = await window.api.updatePassword(id, data)
     setPasswords(next)
@@ -74,6 +79,7 @@ export function usePasswords() {
     setSearchQuery,
     addPassword,
     deletePassword,
+    deletePasswords,
     updatePassword,
     importPasswords,
     reorderPasswords,

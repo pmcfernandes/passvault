@@ -5,13 +5,17 @@ A desktop password manager for Windows, macOS, and Linux, built with Tauri, Reac
 ## Features
 
 - Store passwords with title, username, password, URL, notes, and category
+- Double-click any card to edit it
 - Built-in password generator with configurable length and character types
 - Search passwords by title, username, URL, or notes
 - Copy usernames and passwords to the system clipboard
 - Open website URLs directly from the app
-- Categories: Work, Finance, Email, Social, Shopping, Other
+- Default categories: Work, Finance, Email, Social, Shopping, Other
+- Create and manage custom categories with custom colors
+- Bulk select and delete multiple entries at once
 - Confirm before deleting an entry
 - Encrypted import and export using password-protected `.pvault` backup files
+- Import passwords from Microsoft Edge CSV export files
 - Local encrypted persistence using Tauri commands, AES-GCM, and the operating system keyring
 - Light and dark mode with a clean black-and-white design
 - Multi-language support: English, French, Spanish, Portuguese, and German
@@ -27,6 +31,8 @@ A desktop password manager for Windows, macOS, and Linux, built with Tauri, Reac
 - Web Crypto API for backup encryption (PBKDF2 + AES-GCM)
 - `scrypt` for master password hashing
 - `keyring` for secure key storage
+- `rfd` for native file dialogs
+- `arboard` for clipboard access
 
 ## Development
 

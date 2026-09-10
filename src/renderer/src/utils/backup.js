@@ -1,7 +1,15 @@
+/**
+ * Encrypt accounts array with a password using AES-256-GCM
+ * Uses Web Crypto API in the desktop renderer.
+ */
+
 const PBKDF2_ITERATIONS = 100000
 const SALT_LENGTH = 16
 const IV_LENGTH = 12
 
+/**
+ * Derive an AES-256-GCM key from a password using PBKDF2
+ */
 async function deriveKey(password, salt) {
   const encoder = new TextEncoder()
   const keyMaterial = await crypto.subtle.importKey(
@@ -25,13 +33,19 @@ async function deriveKey(password, salt) {
   )
 }
 
-export async function encryptBackup(passwords, password) {
+/**
+ * Encrypt accounts to a JSON string for export
+ * @param {Array} accounts - The accounts to encrypt
+ * @param {string} password - User-provided password
+ * @returns {Promise<string>} Encrypted data as JSON string
+ */
+export async function encryptBackup(accounts, password) {
   const salt = crypto.getRandomValues(new Uint8Array(SALT_LENGTH))
   const iv = crypto.getRandomValues(new Uint8Array(IV_LENGTH))
   const key = await deriveKey(password, salt)
 
   const encoder = new TextEncoder()
-  const data = encoder.encode(JSON.stringify(passwords))
+  const data = encoder.encode(JSON.stringify(accounts))
 
   const ciphertext = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv },
@@ -47,6 +61,12 @@ export async function encryptBackup(passwords, password) {
   })
 }
 
+/**
+ * Decrypt a backup file
+ * @param {string} encryptedJson - The encrypted JSON string from file
+ * @param {string} password - User-provided password
+ * @returns {Promise<Array|null>} Decrypted accounts array or null on failure
+ */
 export async function decryptBackup(encryptedJson, password) {
   try {
     const { salt, iv, ciphertext } = JSON.parse(encryptedJson)
@@ -69,8 +89,37 @@ export async function decryptBackup(encryptedJson, password) {
   }
 }
 
+/**
+ * Merge imported accounts with existing ones, skipping duplicates
+ */
+export function mergeAccounts(existing, imported) {
+  const isDuplicate = (imp) =>
+    existing.some((ex) => {
+      if (ex.issuer && imp.issuer) {
+        return ex.issuer === imp.issuer && ex.label === imp.label && ex.secret === imp.secret
+      }
+      return ex.title === imp.title && ex.username === imp.username && ex.url === imp.url
+    })
+
+  const newAccounts = imported.filter((imp) => !isDuplicate(imp))
+  const duplicateCount = imported.length - newAccounts.length
+
+  const withNewIds = newAccounts.map((acc) => ({
+    ...acc,
+    id: crypto.randomUUID(),
+    createdAt: Date.now()
+  }))
+
+  return { newAccounts: withNewIds, duplicateCount }
+}
+
+// Helpers
 function arrayToBase64(array) {
-  return btoa(String.fromCharCode(...array))
+  let binary = ''
+  for (let i = 0; i < array.length; i++) {
+    binary += String.fromCharCode(array[i])
+  }
+  return btoa(binary)
 }
 
 function base64ToArray(base64) {
