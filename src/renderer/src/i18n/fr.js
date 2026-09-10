@@ -1,0 +1,130 @@
+export default {
+  common: {
+    appName: 'PassVault',
+    close: 'Fermer',
+    settings: 'Paramètres',
+    add: 'Ajouter',
+    save: 'Enregistrer',
+    cancel: 'Annuler',
+    copy: 'Copier',
+    password: 'Mot de passe',
+    version: 'Version {version}'
+  },
+  app: {
+    vault: 'Coffre',
+    storage: 'Stockage',
+    osEncrypted: 'Chiffré par le SO',
+    entry: 'entrée',
+    entries: 'entrées',
+    loadingVault: 'Chargement du coffre...',
+    checkingVault: 'Vérification du coffre...'
+  },
+  header: {
+    tagline: 'Gestionnaire de Mots de Passe Sécurisé',
+    searchPlaceholder: 'Rechercher des mots de passe...',
+    switchToLight: 'Passer en mode clair',
+    switchToDark: 'Passer en mode sombre'
+  },
+  empty: {
+    title: 'Votre Coffre est Vide',
+    description: 'Commencez par ajouter votre premier mot de passe ou importez depuis un fichier de sauvegarde.',
+    import: 'Importer la Sauvegarde'
+  },
+  categories: {
+    work: 'Travail',
+    finance: 'Finance',
+    email: 'Email',
+    social: 'Social',
+    shopping: 'Achats',
+    other: 'Autres'
+  },
+  card: {
+    username: "Nom d'utilisateur",
+    password: 'Mot de passe',
+    copy: 'Copier',
+    show: 'Afficher',
+    hide: 'Masquer',
+    visit: 'Visiter',
+    edit: 'Modifier',
+    delete: 'Supprimer',
+    confirmDelete: 'Cliquez pour confirmer'
+  },
+  addModal: {
+    title: 'Ajouter un Mot de Passe',
+    editTitle: 'Modifier le Mot de Passe',
+    titleLabel: 'Titre',
+    titlePlaceholder: 'ex. Gmail, GitHub',
+    titleRequired: 'Le titre est obligatoire',
+    category: 'Catégorie',
+    usernameLabel: "Nom d'utilisateur",
+    usernamePlaceholder: "Entrez le nom d'utilisateur ou email",
+    urlLabel: 'URL',
+    urlPlaceholder: 'https://exemple.com',
+    passwordLabel: 'Mot de passe',
+    passwordPlaceholder: 'Entrez le mot de passe ou générez-en un',
+    notesLabel: 'Notes',
+    notesPlaceholder: 'Notes supplémentaires...'
+  },
+  lock: {
+    title: 'App Verrouillée',
+    description: 'Veuillez entrer votre mot de passe pour accéder au coffre.',
+    placeholder: 'Entrez le mot de passe',
+    unlock: 'Déverrouiller',
+    verifying: 'Vérification...',
+    incorrectPassword: 'Mot de passe incorrect',
+    verificationError: "Une erreur s'est produite lors de la vérification"
+  },
+  generator: {
+    title: 'Générateur de Mots de Passe',
+    length: 'Longueur',
+    uppercase: 'Majuscules (A-Z)',
+    lowercase: 'Minuscules (a-z)',
+    digits: 'Chiffres (0-9)',
+    symbols: 'Symboles (!@#$...)',
+    regenerate: 'Régénérer'
+  },
+  settings: {
+    eyebrow: 'Paramètres',
+    title: 'Préférences',
+    tabs: {
+      appLock: 'Verrouillage',
+      backupRestore: 'Sauvegarde',
+      about: 'À propos'
+    },
+    appLock: 'Verrouillage',
+    lockDescription: 'Exiger un mot de passe pour accéder à votre coffre au démarrage.',
+    about: 'À propos',
+    currentPassword: 'Mot de Passe actuel',
+    newPassword: 'Nouveau Mot de Passe (vide pour désactiver)',
+    setPassword: 'Définir le Mot de Passe',
+    updateLock: 'Mettre à Jour',
+    disableLock: 'Désactiver',
+    enableLock: 'Activer',
+    incorrectCurrent: 'Mot de passe actuel incorrect.',
+    lockEnabled: 'Verrouillage activé.',
+    lockDisabled: 'Verrouillage désactivé.',
+    backupRestore: 'Sauvegarde',
+    exportAccounts: 'Exporter les Mots de Passe',
+    exportDesc: 'Exporter tous les mots de passe dans un fichier de sauvegarde chiffré.',
+    exportButton: 'Exporter .pvault',
+    exportPasswordPrompt: 'Entrez un mot de passe pour chiffrer la sauvegarde :',
+    exportSuccess: 'Sauvegarde exportée avec succès',
+    exportError: "Échec de l'exportation",
+    importAccounts: 'Importer les Mots de Passe',
+    importDesc: 'Importer des mots de passe depuis un fichier de sauvegarde chiffré.',
+    importButton: 'Importer',
+    importPasswordPrompt: 'Entrez le mot de passe de la sauvegarde :',
+    importDecryptFailed: 'Échec du déchiffrement. Mot de passe incorrect ?',
+    importSuccess: '{count} entrées importées avec succès',
+    importError: "Échec de l'importation",
+    language: 'Langue',
+    selectLanguage: 'Sélectionner la langue',
+    aboutDesc: 'Un gestionnaire de mots de passe de bureau sécurisé. Toutes les données sont chiffrées localement avec AES-256-GCM.',
+    author: 'Auteur',
+    email: 'Email',
+    website: 'Site web',
+    license: 'Licence',
+    entries: 'Entrées',
+    encryption: 'Chiffrement'
+  }
+}

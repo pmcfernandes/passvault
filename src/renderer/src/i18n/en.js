@@ -1,0 +1,130 @@
+export default {
+  common: {
+    appName: 'PassVault',
+    close: 'Close',
+    settings: 'Settings',
+    add: 'Add',
+    save: 'Save',
+    cancel: 'Cancel',
+    copy: 'Copy',
+    password: 'Password',
+    version: 'Version {version}'
+  },
+  app: {
+    vault: 'Vault',
+    storage: 'Storage',
+    osEncrypted: 'OS Encrypted',
+    entry: 'entry',
+    entries: 'entries',
+    loadingVault: 'Loading vault...',
+    checkingVault: 'Checking vault...'
+  },
+  header: {
+    tagline: 'Secure Password Manager',
+    searchPlaceholder: 'Search passwords...',
+    switchToLight: 'Switch to light mode',
+    switchToDark: 'Switch to dark mode'
+  },
+  empty: {
+    title: 'Your Vault is Empty',
+    description: 'Start by adding your first password entry or import from a backup file.',
+    import: 'Import Backup'
+  },
+  categories: {
+    work: 'Work',
+    finance: 'Finance',
+    email: 'Email',
+    social: 'Social',
+    shopping: 'Shopping',
+    other: 'Other'
+  },
+  card: {
+    username: 'Username',
+    password: 'Password',
+    copy: 'Copy',
+    show: 'Show',
+    hide: 'Hide',
+    visit: 'Visit',
+    edit: 'Edit',
+    delete: 'Delete',
+    confirmDelete: 'Click to confirm'
+  },
+  addModal: {
+    title: 'Add Password',
+    editTitle: 'Edit Password',
+    titleLabel: 'Title',
+    titlePlaceholder: 'e.g. Gmail, GitHub',
+    titleRequired: 'Title is required',
+    category: 'Category',
+    usernameLabel: 'Username',
+    usernamePlaceholder: 'Enter username or email',
+    urlLabel: 'URL',
+    urlPlaceholder: 'https://example.com',
+    passwordLabel: 'Password',
+    passwordPlaceholder: 'Enter password or generate',
+    notesLabel: 'Notes',
+    notesPlaceholder: 'Additional notes...'
+  },
+  lock: {
+    title: 'App Locked',
+    description: 'Please enter your application password to access the vault.',
+    placeholder: 'Enter password',
+    unlock: 'Unlock',
+    verifying: 'Verifying...',
+    incorrectPassword: 'Incorrect password',
+    verificationError: 'An error occurred during verification'
+  },
+  generator: {
+    title: 'Password Generator',
+    length: 'Length',
+    uppercase: 'Uppercase (A-Z)',
+    lowercase: 'Lowercase (a-z)',
+    digits: 'Digits (0-9)',
+    symbols: 'Symbols (!@#$...)',
+    regenerate: 'Regenerate'
+  },
+  settings: {
+    eyebrow: 'Settings',
+    title: 'Preferences',
+    tabs: {
+      appLock: 'App Lock',
+      backupRestore: 'Backup & Restore',
+      about: 'About'
+    },
+    appLock: 'App Lock',
+    lockDescription: 'Require a password to access your vault when the app starts.',
+    about: 'About',
+    currentPassword: 'Current password',
+    newPassword: 'New Password (blank to disable)',
+    setPassword: 'Set Password',
+    updateLock: 'Update Lock',
+    disableLock: 'Disable Lock',
+    enableLock: 'Enable Lock',
+    incorrectCurrent: 'Incorrect current app password.',
+    lockEnabled: 'App lock enabled.',
+    lockDisabled: 'App lock disabled.',
+    backupRestore: 'Backup & Restore',
+    exportAccounts: 'Export Passwords',
+    exportDesc: 'Export all passwords as an encrypted backup file.',
+    exportButton: 'Export .pvault',
+    exportPasswordPrompt: 'Enter a password to encrypt the backup:',
+    exportSuccess: 'Backup exported successfully',
+    exportError: 'Failed to export backup',
+    importAccounts: 'Import Passwords',
+    importDesc: 'Import passwords from an encrypted backup file.',
+    importButton: 'Import',
+    importPasswordPrompt: 'Enter the backup password:',
+    importDecryptFailed: 'Decryption failed. Wrong password?',
+    importSuccess: '{count} entries imported successfully',
+    importError: 'Failed to import backup',
+    language: 'Language',
+    selectLanguage: 'Select language',
+    aboutDesc: 'A secure desktop password manager. All data is encrypted locally using AES-256-GCM.',
+    author: 'Author',
+    email: 'Email',
+    website: 'Website',
+    license: 'License',
+    entries: 'Entries',
+    encryption: 'Encryption'
+  }
+}

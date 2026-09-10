@@ -1,0 +1,130 @@
+export default {
+  common: {
+    appName: 'PassVault',
+    close: 'Schließen',
+    settings: 'Einstellungen',
+    add: 'Hinzufügen',
+    save: 'Speichern',
+    cancel: 'Abbrechen',
+    copy: 'Kopieren',
+    password: 'Passwort',
+    version: 'Version {version}'
+  },
+  app: {
+    vault: 'Tresor',
+    storage: 'Speicher',
+    osEncrypted: 'Vom BS verschlüsselt',
+    entry: 'Eintrag',
+    entries: 'Einträge',
+    loadingVault: 'Tresor wird geladen...',
+    checkingVault: 'Tresor wird überprüft...'
+  },
+  header: {
+    tagline: 'Sicherer Passwort-Manager',
+    searchPlaceholder: 'Passwörter suchen...',
+    switchToLight: 'Zum hellen Modus wechseln',
+    switchToDark: 'Zum dunklen Modus wechseln'
+  },
+  empty: {
+    title: 'Ihr Tresor ist Leer',
+    description: 'Fügen Sie Ihr erstes Passwort hinzu oder importieren Sie eine Sicherungsdatei.',
+    import: 'Sicherung Importieren'
+  },
+  categories: {
+    work: 'Arbeit',
+    finance: 'Finanzen',
+    email: 'E-Mail',
+    social: 'Soziales',
+    shopping: 'Einkaufen',
+    other: 'Sonstiges'
+  },
+  card: {
+    username: 'Benutzername',
+    password: 'Passwort',
+    copy: 'Kopieren',
+    show: 'Anzeigen',
+    hide: 'Ausblenden',
+    visit: 'Besuchen',
+    edit: 'Bearbeiten',
+    delete: 'Löschen',
+    confirmDelete: 'Klicken zum Bestätigen'
+  },
+  addModal: {
+    title: 'Passwort Hinzufügen',
+    editTitle: 'Passwort Bearbeiten',
+    titleLabel: 'Titel',
+    titlePlaceholder: 'z.B. Gmail, GitHub',
+    titleRequired: 'Titel ist erforderlich',
+    category: 'Kategorie',
+    usernameLabel: 'Benutzername',
+    usernamePlaceholder: 'Benutzername oder E-Mail eingeben',
+    urlLabel: 'URL',
+    urlPlaceholder: 'https://beispiel.de',
+    passwordLabel: 'Passwort',
+    passwordPlaceholder: 'Passwort eingeben oder generieren',
+    notesLabel: 'Notizen',
+    notesPlaceholder: 'Zusätzliche Notizen...'
+  },
+  lock: {
+    title: 'App Gesperrt',
+    description: 'Bitte geben Sie Ihr Passwort ein, um auf den Tresor zuzugreifen.',
+    placeholder: 'Passwort eingeben',
+    unlock: 'Entsperren',
+    verifying: 'Überprüfung...',
+    incorrectPassword: 'Falsches Passwort',
+    verificationError: 'Ein Fehler ist bei der Überprüfung aufgetreten'
+  },
+  generator: {
+    title: 'Passwort-Generator',
+    length: 'Länge',
+    uppercase: 'Großbuchstaben (A-Z)',
+    lowercase: 'Kleinbuchstaben (a-z)',
+    digits: 'Ziffern (0-9)',
+    symbols: 'Sonderzeichen (!@#$...)',
+    regenerate: 'Neu Generieren'
+  },
+  settings: {
+    eyebrow: 'Einstellungen',
+    title: 'Präferenzen',
+    tabs: {
+      appLock: 'App-Sperre',
+      backupRestore: 'Sicherung',
+      about: 'Über'
+    },
+    appLock: 'App-Sperre',
+    lockDescription: 'Ein Passwort beim Start der App verlangen, um den Tresor zu öffnen.',
+    about: 'Über',
+    currentPassword: 'Aktuelles passwort',
+    newPassword: 'Neues Passwort (leer zum Deaktivieren)',
+    setPassword: 'Passwort Festlegen',
+    updateLock: 'Sperre Aktualisieren',
+    disableLock: 'Sperre Deaktivieren',
+    enableLock: 'Sperre Aktivieren',
+    incorrectCurrent: 'Aktuelles Passwort falsch.',
+    lockEnabled: 'App-Sperre aktiviert.',
+    lockDisabled: 'App-Sperre deaktiviert.',
+    backupRestore: 'Sicherung',
+    exportAccounts: 'Passwörter Exportieren',
+    exportDesc: 'Alle Passwörter als verschlüsselte Sicherungsdatei exportieren.',
+    exportButton: 'Exportieren .pvault',
+    exportPasswordPrompt: 'Geben Sie ein Passwort zum Verschlüsseln der Sicherung ein:',
+    exportSuccess: 'Sicherung erfolgreich exportiert',
+    exportError: 'Export fehlgeschlagen',
+    importAccounts: 'Passwörter Importieren',
+    importDesc: 'Passwörter aus einer verschlüsselten Sicherungsdatei importieren.',
+    importButton: 'Importieren',
+    importPasswordPrompt: 'Geben Sie das Sicherungspasswort ein:',
+    importDecryptFailed: 'Entschlüsselung fehlgeschlagen. Falsches Passwort?',
+    importSuccess: '{count} Einträge erfolgreich importiert',
+    importError: 'Import fehlgeschlagen',
+    language: 'Sprache',
+    selectLanguage: 'Sprache auswählen',
+    aboutDesc: 'Ein sicherer Desktop-Passwort-Manager. Alle Daten werden lokal mit AES-256-GCM verschlüsselt.',
+    author: 'Autor',
+    email: 'E-Mail',
+    website: 'Webseite',
+    license: 'Lizenz',
+    entries: 'Einträge',
+    encryption: 'Verschlüsselung'
+  }
+}

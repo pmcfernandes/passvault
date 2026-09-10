@@ -1,0 +1,130 @@
+export default {
+  common: {
+    appName: 'PassVault',
+    close: 'Fechar',
+    settings: 'Preferências',
+    add: 'Adicionar',
+    save: 'Guardar',
+    cancel: 'Cancelar',
+    copy: 'Copiar',
+    password: 'Palavra-passe',
+    version: 'Versão {version}'
+  },
+  app: {
+    vault: 'Cofre',
+    storage: 'Armazenamento',
+    osEncrypted: 'Encriptado pelo SO',
+    entry: 'entrada',
+    entries: 'entradas',
+    loadingVault: 'A carregar cofre...',
+    checkingVault: 'A verificar cofre...'
+  },
+  header: {
+    tagline: 'Gestor Seguro de Palavras-passe',
+    searchPlaceholder: 'Pesquisar palavras-passe...',
+    switchToLight: 'Mudar para modo claro',
+    switchToDark: 'Mudar para modo escuro'
+  },
+  empty: {
+    title: 'O seu Cofre está Vazio',
+    description: 'Comece por adicionar a sua primeira palavra-passe ou importe de um ficheiro de backup.',
+    import: 'Importar Backup'
+  },
+  categories: {
+    work: 'Trabalho',
+    finance: 'Finanças',
+    email: 'Email',
+    social: 'Social',
+    shopping: 'Compras',
+    other: 'Outros'
+  },
+  card: {
+    username: 'Utilizador',
+    password: 'Palavra-passe',
+    copy: 'Copiar',
+    show: 'Mostrar',
+    hide: 'Ocultar',
+    visit: 'Visitar',
+    edit: 'Editar',
+    delete: 'Apagar',
+    confirmDelete: 'Clique para confirmar'
+  },
+  addModal: {
+    title: 'Adicionar Palavra-passe',
+    editTitle: 'Editar Palavra-passe',
+    titleLabel: 'Título',
+    titlePlaceholder: 'ex. Gmail, GitHub',
+    titleRequired: 'O título é obrigatório',
+    category: 'Categoria',
+    usernameLabel: 'Nome de utilizador',
+    usernamePlaceholder: 'Digite o nome de utilizador ou email',
+    urlLabel: 'URL',
+    urlPlaceholder: 'https://exemplo.com',
+    passwordLabel: 'Palavra-passe',
+    passwordPlaceholder: 'Digite a palavra-passe ou gere uma',
+    notesLabel: 'Notas',
+    notesPlaceholder: 'Notas adicionais...'
+  },
+  lock: {
+    title: 'App Bloqueada',
+    description: 'Introduza a palavra-passe da aplicação para aceder ao cofre.',
+    placeholder: 'Introduza a palavra-passe',
+    unlock: 'Desbloquear',
+    verifying: 'A verificar...',
+    incorrectPassword: 'Palavra-passe incorreta',
+    verificationError: 'Ocorreu um erro durante a verificação'
+  },
+  generator: {
+    title: 'Gerador de Palavras-passe',
+    length: 'Comprimento',
+    uppercase: 'Maiúsculas (A-Z)',
+    lowercase: 'Minúsculas (a-z)',
+    digits: 'Dígitos (0-9)',
+    symbols: 'Símbolos (!@#$...)',
+    regenerate: 'Regenerar'
+  },
+  settings: {
+    eyebrow: 'Definições',
+    title: 'Preferências',
+    tabs: {
+      appLock: 'Bloqueio da App',
+      backupRestore: 'Cópia de Segurança',
+      about: 'Sobre'
+    },
+    appLock: 'Bloqueio da App',
+    lockDescription: 'Exigir uma palavra-passe para aceder ao cofre ao iniciar.',
+    about: 'Sobre',
+    currentPassword: 'Palavra-passe atual',
+    newPassword: 'Nova Palavra-passe (deixe vazio para desativar)',
+    setPassword: 'Definir Palavra-passe',
+    updateLock: 'Atualizar Bloqueio',
+    disableLock: 'Desativar Bloqueio',
+    enableLock: 'Ativar Bloqueio',
+    incorrectCurrent: 'Palavra-passe atual incorreta.',
+    lockEnabled: 'Bloqueio da app ativado.',
+    lockDisabled: 'Bloqueio da app desativado.',
+    backupRestore: 'Cópia de Segurança',
+    exportAccounts: 'Exportar Palavras-passe',
+    exportDesc: 'Exportar todas as palavras-passe como ficheiro de backup encriptado.',
+    exportButton: 'Exportar .pvault',
+    exportPasswordPrompt: 'Digite uma palavra-passe para encriptar o backup:',
+    exportSuccess: 'Backup exportado com sucesso',
+    exportError: 'Falha ao exportar backup',
+    importAccounts: 'Importar Palavras-passe',
+    importDesc: 'Importar palavras-passe de um ficheiro de backup encriptado.',
+    importButton: 'Importar',
+    importPasswordPrompt: 'Digite a palavra-passe do backup:',
+    importDecryptFailed: 'Desencriptação falhou. Palavra-passe incorreta?',
+    importSuccess: '{count} entradas importadas com sucesso',
+    importError: 'Falha ao importar backup',
+    language: 'Idioma',
+    selectLanguage: 'Selecionar idioma',
+    aboutDesc: 'Um gestor de palavras-passe de mesa seguro. Todos os dados são encriptados localmente usando AES-256-GCM.',
+    author: 'Autor',
+    email: 'Email',
+    website: 'Website',
+    license: 'Licença',
+    entries: 'Entradas',
+    encryption: 'Encriptação'
+  }
+}

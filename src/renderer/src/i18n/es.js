@@ -1,0 +1,130 @@
+export default {
+  common: {
+    appName: 'PassVault',
+    close: 'Cerrar',
+    settings: 'Configuración',
+    add: 'Agregar',
+    save: 'Guardar',
+    cancel: 'Cancelar',
+    copy: 'Copiar',
+    password: 'Contraseña',
+    version: 'Versión {version}'
+  },
+  app: {
+    vault: 'Bóveda',
+    storage: 'Almacenamiento',
+    osEncrypted: 'Encriptado por el SO',
+    entry: 'entrada',
+    entries: 'entradas',
+    loadingVault: 'Cargando bóveda...',
+    checkingVault: 'Verificando bóveda...'
+  },
+  header: {
+    tagline: 'Gestor Seguro de Contraseñas',
+    searchPlaceholder: 'Buscar contraseñas...',
+    switchToLight: 'Cambiar a modo claro',
+    switchToDark: 'Cambiar a modo oscuro'
+  },
+  empty: {
+    title: 'Tu Bóveda está Vacía',
+    description: 'Comienza agregando tu primera contraseña o importa desde un archivo de respaldo.',
+    import: 'Importar Respaldo'
+  },
+  categories: {
+    work: 'Trabajo',
+    finance: 'Finanzas',
+    email: 'Correo',
+    social: 'Social',
+    shopping: 'Compras',
+    other: 'Otros'
+  },
+  card: {
+    username: 'Usuario',
+    password: 'Contraseña',
+    copy: 'Copiar',
+    show: 'Mostrar',
+    hide: 'Ocultar',
+    visit: 'Visitar',
+    edit: 'Editar',
+    delete: 'Eliminar',
+    confirmDelete: 'Click para confirmar'
+  },
+  addModal: {
+    title: 'Agregar Contraseña',
+    editTitle: 'Editar Contraseña',
+    titleLabel: 'Título',
+    titlePlaceholder: 'ej. Gmail, GitHub',
+    titleRequired: 'El título es obligatorio',
+    category: 'Categoría',
+    usernameLabel: 'Usuario',
+    usernamePlaceholder: 'Ingrese usuario o correo',
+    urlLabel: 'URL',
+    urlPlaceholder: 'https://ejemplo.com',
+    passwordLabel: 'Contraseña',
+    passwordPlaceholder: 'Ingrese contraseña o genere una',
+    notesLabel: 'Notas',
+    notesPlaceholder: 'Notas adicionales...'
+  },
+  lock: {
+    title: 'App Bloqueada',
+    description: 'Ingrese su contraseña maestra para desbloquear.',
+    placeholder: 'Ingrese contraseña',
+    unlock: 'Desbloquear',
+    verifying: 'Verificando...',
+    incorrectPassword: 'Contraseña incorrecta',
+    verificationError: 'Ocurrió un error durante la verificación'
+  },
+  generator: {
+    title: 'Generador de Contraseñas',
+    length: 'Longitud',
+    uppercase: 'Mayúsculas (A-Z)',
+    lowercase: 'Minúsculas (a-z)',
+    digits: 'Dígitos (0-9)',
+    symbols: 'Símbolos (!@#$...)',
+    regenerate: 'Regenerar'
+  },
+  settings: {
+    eyebrow: 'Configuración',
+    title: 'Preferencias',
+    tabs: {
+      appLock: 'Bloqueo de App',
+      backupRestore: 'Copia de Seguridad',
+      about: 'Acerca de'
+    },
+    appLock: 'Bloqueo de App',
+    lockDescription: 'Requerir una contraseña para acceder a tu bóveda al iniciar la app.',
+    about: 'Acerca de',
+    currentPassword: 'Contraseña actual',
+    newPassword: 'Nueva Contraseña (vacío para desactivar)',
+    setPassword: 'Establecer Contraseña',
+    updateLock: 'Actualizar Bloqueo',
+    disableLock: 'Desactivar Bloqueo',
+    enableLock: 'Activar Bloqueo',
+    incorrectCurrent: 'Contraseña actual incorrecta.',
+    lockEnabled: 'Bloqueo de app activado.',
+    lockDisabled: 'Bloqueo de app desactivado.',
+    backupRestore: 'Copia de Seguridad',
+    exportAccounts: 'Exportar Contraseñas',
+    exportDesc: 'Exportar todas las contraseñas como archivo de respaldo encriptado.',
+    exportButton: 'Exportar .pvault',
+    exportPasswordPrompt: 'Ingrese una contraseña para encriptar el respaldo:',
+    exportSuccess: 'Respaldo exportado exitosamente',
+    exportError: 'Error al exportar respaldo',
+    importAccounts: 'Importar Contraseñas',
+    importDesc: 'Importar contraseñas desde un archivo de respaldo encriptado.',
+    importButton: 'Importar',
+    importPasswordPrompt: 'Ingrese la contraseña del respaldo:',
+    importDecryptFailed: 'Desencriptación fallida. ¿Contraseña incorrecta?',
+    importSuccess: '{count} entradas importadas exitosamente',
+    importError: 'Error al importar respaldo',
+    language: 'Idioma',
+    selectLanguage: 'Seleccionar idioma',
+    aboutDesc: 'Un gestor de contraseñas de escritorio seguro. Todos los datos se encriptan localmente usando AES-256-GCM.',
+    author: 'Autor',
+    email: 'Correo',
+    website: 'Sitio web',
+    license: 'Licencia',
+    entries: 'Entradas',
+    encryption: 'Encriptación'
+  }
+}
