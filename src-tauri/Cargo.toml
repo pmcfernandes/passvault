@@ -1,6 +1,6 @@
 [package]
 name = "passvault"
-version = "1.1.0"
+version = "1.1.1"
 description = "A desktop password manager"
 authors = ["Pedro Fernandes <hello@impedro.com>"]
 license = "MIT"

@@ -37,7 +37,7 @@ export default function AddCategoryModal({ open, onClose, onCategoriesChange }) 
   return (
     <div className="modal-backdrop" onClick={handleClose}>
       <div className="modal-panel" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '400px' }}>
-        <div className="modal-header">
+        <div className="modal-header" style={{ marginBottom: '25px'}}>
           <h2>{t('addModal.manageCategories')}</h2>
           <button className="icon-button" onClick={handleClose}>
             <X size={20} />

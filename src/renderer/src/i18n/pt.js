@@ -39,7 +39,7 @@ export default {
     other: 'Outros'
   },
   card: {
-    username: 'Nome de utilizador',
+    username: 'Utilizador',
     password: 'Palavra-passe',
     copy: 'Copiar',
     show: 'Mostrar',
@@ -78,7 +78,7 @@ export default {
     notesPlaceholder: 'Notas adicionais...'
   },
   lock: {
-    title: 'App Bloqueada',
+    title: 'Aplicação bloqueada',
     description: 'Introduza a palavra-passe da aplicação para aceder ao cofre.',
     placeholder: 'Introduza a palavra-passe',
     unlock: 'Desbloquear',
